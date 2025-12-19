@@ -20,4 +20,13 @@ async function bootstrap() {
   await app.listen(port);
 }
 
-void bootstrap();
+if (process.env.NODE_ENV !== 'production') {
+  void bootstrap();
+}
+
+export default async (req: any, res: any) => {
+  const app = await NestFactory.create(AppModule);
+  app.enableCors();
+  const instance = await app.getHttpAdapter().getInstance();
+  return instance(req, res);
+};
