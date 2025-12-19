@@ -10,11 +10,6 @@ import { DatabaseModule } from '../database/database.module';
   controllers: [UsersController],
   imports: [DatabaseModule],
   exports: [UsersService],
-  providers: [
-    UsersService,
-    AuthService,
-    JwtService,
-    ...usersProviders,
-  ],
+  providers: [UsersService, AuthService, JwtService, ...usersProviders],
 })
 export class UsersModule {}

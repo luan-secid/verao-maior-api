@@ -5,10 +5,10 @@ export type AuthDocument = HydratedDocument<Auth>;
 
 @Schema()
 export class Auth {
-    @Prop({ type: String })
-    email: string;
-    @Prop({ type: String })
-    senha: string;
+  @Prop({ type: String })
+  email: string;
+  @Prop({ type: String })
+  password: string;
 }
 
 export const AuthSchema = SchemaFactory.createForClass(Auth);

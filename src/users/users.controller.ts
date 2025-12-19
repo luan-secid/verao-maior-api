@@ -13,9 +13,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
-import { AuthUserDto } from 'src/auth/auth/dto/auth-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import 'dotenv/config';
+import { CreateAuthDto } from 'src/auth/dto/create-auth.dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -34,7 +34,7 @@ export class UsersController {
   }
 
   @Post('login')
-  async validateUser(@Body() authUserDto: AuthUserDto): Promise<{
+  async validateUser(@Body() authUserDto: CreateAuthDto): Promise<{
     access_token: string;
     payload: { sub: string; username: string };
   }> {

@@ -6,5 +6,5 @@ export class UpdateUserDto extends PartialType(CreateAuthDto) {
   @ApiProperty()
   email: string;
   @ApiProperty()
-  senha: string;
+  password: string;
 }
