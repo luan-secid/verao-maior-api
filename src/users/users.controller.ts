@@ -26,9 +26,9 @@ export class UsersController {
   ) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto): Promise<any> {
     const salt = 10;
-    const password = await bcrypt.hash(createUserDto.password, salt);
+    const password: string = await bcrypt.hash(createUserDto.password, salt);
     createUserDto.password = password;
     return this.usersService.create(createUserDto);
   }
@@ -41,7 +41,10 @@ export class UsersController {
     const userAuth = await this.usersService.findByEmail(authUserDto.email);
     console.log('email do login: ', authUserDto.email);
     console.log('senha do login: ', authUserDto.password);
-    if (!bcrypt.compare(authUserDto.password, userAuth.password)) {
+    if (
+      !userAuth ||
+      !(await bcrypt.compare(authUserDto.password, userAuth.password))
+    ) {
       throw new UnauthorizedException();
     }
     const payload = { sub: userAuth.email, username: userAuth.name };
@@ -60,7 +63,7 @@ export class UsersController {
   }
 
   @Get('findById/:id')
-  findById(@Param() params) {
+  findById(@Param() params: { id: string }) {
     return this.usersService.findById(params.id);
   }
 

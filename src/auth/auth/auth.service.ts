@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constant';
@@ -12,7 +12,7 @@ export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async login(user: AuthUserDto) {
     let userValid: User | null = new User();
@@ -28,20 +28,18 @@ export class AuthService {
     } else {
       const payload = { sub: userValid.email, username: userValid.name };
       return {
-        token: await this.jwtService.signAsync(payload, { secret: jwtConstants.secret }),
-        email: userValid.email
+        token: await this.jwtService.signAsync(payload, {
+          secret: jwtConstants.secret,
+        }),
+        email: userValid.email,
       };
     }
   }
 
-  async validateUser(email: string, password: string) {
-    let user = new User();
-    user = await this.userService.findByEmail(email);
+  async validateUser(email: string, password: string): Promise<User | null> {
+    const user: User | undefined = await this.userService.findByEmail(email);
     if (user) {
-      const isPasswordValid = bcrypt.compareSync(
-        password,
-        user.password as string,
-      );
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
       if (isPasswordValid === true) {
         return user;
       } else {

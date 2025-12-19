@@ -44,19 +44,21 @@ export class UsersService {
           HttpStatus.NOT_FOUND,
         );
       }
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Não foi possível realizar a busca.',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
+    } catch (error: any) {
+      if (error) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: 'Não foi possível realizar a busca.',
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     }
   }
 
   async avoidDuplicity(email: string) {
-    const query: any = { email: email };
+    const query = { email: email };
     const result = await this.usersModel.findOne(query).exec();
     if (result) {
       return true;
@@ -66,7 +68,7 @@ export class UsersService {
   }
 
   async findById(id: string) {
-    const query: any = { _id: id };
+    const query = { _id: id };
     try {
       const result = await this.usersModel.findOne(query).exec();
       if (result) {
@@ -92,7 +94,7 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const find = this.usersModel.findById(id);
+    const find = await this.usersModel.findById(id).exec();
     if (!find) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     } else {
@@ -105,7 +107,7 @@ export class UsersService {
   }
 
   async remove(id: string) {
-    const query: any = { user: new mongoose.Types.ObjectId(id) };
+    const query = { user: new mongoose.Types.ObjectId(id) };
     return await this.usersModel.deleteOne(query).exec();
   }
 }
