@@ -15,7 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import 'dotenv/config';
-import { CreateAuthDto } from 'src/auth/dto/create-auth.dto';
+import { CreateAuthDto } from './../auth/dto/create-auth.dto';
 
 @ApiTags('User')
 @Controller('user')
