@@ -12,12 +12,14 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     AuthModule,
     UsersModule,
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/veraomaior-db'),
+    MongooseModule.forRoot(
+      'mongodb+srv://veraomaior:secid2025@verao-maior-db.wbdit0w.mongodb.net/?appName=verao-maior-db',
+    ),
     ScheduleModule,
     ResourceModule,
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,10 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import mongoose, { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -72,7 +66,6 @@ export class UsersService {
   }
 
   async findById(id: string) {
-    
     const query: any = { _id: id };
     try {
       const result = await this.usersModel.findOne(query).exec();
@@ -103,7 +96,11 @@ export class UsersService {
     if (!find) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     } else {
-      return await this.usersModel.findByIdAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true },);
+      return await this.usersModel.findByIdAndUpdate(
+        { _id: id },
+        { $set: updateUserDto },
+        { new: true },
+      );
     }
   }
 

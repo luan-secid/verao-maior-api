@@ -22,8 +22,8 @@ import 'dotenv/config';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private jwtService: JwtService
-  ) { }
+    private jwtService: JwtService,
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -34,18 +34,23 @@ export class UsersController {
   }
 
   @Post('login')
-  async validateUser(@Body() authUserDto: AuthUserDto): Promise<{ access_token: string, payload: { sub: string, username: string } }> {
+  async validateUser(@Body() authUserDto: AuthUserDto): Promise<{
+    access_token: string;
+    payload: { sub: string; username: string };
+  }> {
     const userAuth = await this.usersService.findByEmail(authUserDto.email);
-    console.log("email do login: ", authUserDto.email)
-    console.log("senha do login: ", authUserDto.password)
+    console.log('email do login: ', authUserDto.email);
+    console.log('senha do login: ', authUserDto.password);
     if (!bcrypt.compare(authUserDto.password, userAuth.password)) {
       throw new UnauthorizedException();
     }
     const payload = { sub: userAuth.email, username: userAuth.name };
     const secretKey = process.env.JWT_SECRET;
     return {
-      access_token: await this.jwtService.signAsync(payload, { secret: secretKey }),
-      payload
+      access_token: await this.jwtService.signAsync(payload, {
+        secret: secretKey,
+      }),
+      payload,
     };
   }
 

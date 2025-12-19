@@ -6,7 +6,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
     .setTitle('Verão Maior PR.GOV')
-    .setDescription('Agendamento simples para banhistas que desejam curtir os espaços SECID neste verão.')
+    .setDescription(
+      'Agendamento simples para banhistas que desejam curtir os espaços SECID neste verão.',
+    )
     .setVersion('0.3')
     .addTag('User')
     .build();
@@ -16,4 +18,5 @@ async function bootstrap() {
   app.enableCors();
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+
+void bootstrap();
