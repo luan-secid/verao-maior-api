@@ -16,7 +16,12 @@ async function bootstrap() {
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('veraomaior-api', app, documentFactory);
-  app.enableCors();
+  app.enableCors({
+    origin: ['http://localhost:4200', 'https://verao-maior-app.vercel.app'],
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
+  });
   await app.listen(port);
 }
 

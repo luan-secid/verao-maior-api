@@ -32,6 +32,7 @@ export class UsersService {
   async findByEmail(email: string) {
     const query: any = { email: email };
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const result = await this.usersModel.findOne(query).exec();
       if (result) {
         return result;
@@ -82,11 +83,11 @@ export class UsersService {
           HttpStatus.NOT_FOUND,
         );
       }
-    } catch (error) {
+    } catch (error: unknown) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Não foi possível realizar a busca.',
+          error: error,
         },
         HttpStatus.BAD_REQUEST,
       );

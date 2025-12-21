@@ -28,9 +28,19 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<any> {
     const salt = 10;
-    const password: string = await bcrypt.hash(createUserDto.password, salt);
-    createUserDto.password = password;
-    return this.usersService.create(createUserDto);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+      const password = await bcrypt.hash(createUserDto.password, salt);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      createUserDto.password = password;
+      return this.usersService.create(createUserDto);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Erro no Bcrypt:', error.message);
+      } else {
+        console.error('Ocorreu um erro desconhecido', error);
+      }
+    }
   }
 
   @Post('login')
@@ -43,6 +53,7 @@ export class UsersController {
     console.log('senha do login: ', authUserDto.password);
     if (
       !userAuth ||
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       !(await bcrypt.compare(authUserDto.password, userAuth.password))
     ) {
       throw new UnauthorizedException();

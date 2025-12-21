@@ -1,5 +1,5 @@
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 export type UsersDocument = Users & Document;
 
@@ -7,7 +7,7 @@ export type UsersDocument = Users & Document;
 export class Users extends Document {
   @Prop({ required: true })
   name: string;
-  @Prop({ required: true })
+  @Prop()
   age: number;
   @Prop({ required: true })
   birthday: Date;
@@ -15,6 +15,8 @@ export class Users extends Document {
   password: string;
   @Prop({ required: true })
   email: string;
+  @Prop()
+  type: string;
   @Prop({ required: true })
   phoneNumber: string;
   @Prop({ required: true })

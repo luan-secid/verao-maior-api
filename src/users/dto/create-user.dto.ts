@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Types } from 'mongoose';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -12,6 +11,8 @@ export class CreateUserDto {
   password: string;
   @ApiProperty()
   email: string;
+  @ApiProperty()
+  type: string;
   @ApiProperty()
   phoneNumber: string;
   @ApiProperty()
