@@ -18,7 +18,7 @@ async function bootstrap() {
   SwaggerModule.setup('veraomaior-api', app, documentFactory);
   app.enableCors({
     origin: ['http://localhost:4200', 'https://verao-maior-app.vercel.app'],
-    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    methods: 'GET,POST,PUT,DELETE,OPTIONS,PATCH',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
   });
