@@ -20,7 +20,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:4200',
       'https://verao-maior-app.vercel.app',
-      'https://veraomaior-secid.web.app/',
+      'https://veraomaior-secid.web.app',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
