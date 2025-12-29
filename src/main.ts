@@ -19,6 +19,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:4200',
+      'https://veraomaior-secid.firebaseapp.com',
       'https://verao-maior-app.vercel.app',
       'https://veraomaior-secid.web.app',
     ],
